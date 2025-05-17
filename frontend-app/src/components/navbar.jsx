@@ -7,9 +7,13 @@ function Navbar(props){
 
     const {navbarLinks,searchIcon,barsIcon} = useMyContext()
 
+    const justLink = 'hover:underline'
+    const activeLink = 'text-orange-500'
+
+
     const navbarLinkMap = navbarLinks.map((each)=>{
         return (
-            <li key={`navbarLinks${each.id}`} className={'ml-3'}><NavLink to={each.url}>{each.title}</NavLink></li>
+            <li key={`navbarLinks${each.id}`} className={'ml-3'}><NavLink to={each.url} className={({isActive}) => isActive ? activeLink:justLink}>{each.title}</NavLink></li>
         )
     })
 
@@ -22,7 +26,7 @@ function Navbar(props){
                 </div>
                 <div className={'hidden w-[80%] md:flex items-center'}>
                     <ul className={'flex w-[60%] lg:justify-between lg:w-[40%]'}>
-                        <li className={'ml-3 lg:block lg:ml-0'}><NavLink to={'.'}>Home</NavLink></li>
+                        <li className={'ml-3 lg:block lg:ml-0'}><NavLink to={'.'} className={({isActive})=> isActive ? activeLink:justLink}>Home</NavLink></li>
                         {navbarLinkMap}
                     </ul>
                     <form className={"inline-block ml-auto lg:ml-5 w-[40%] lg:w-[60%]"} autoComplete={'off'} name={'search-form'}>
@@ -55,6 +59,7 @@ function Navbar(props){
                     <Button 
                     btnInnerText={barsIcon}
                     btnStyle={'py-[.1rem] px-1 rounded-md cursor-pointer hover:bg-gray-600 text-2xl'}
+                    handleClick={props.showSlideMenu}
                     />
                 </div>
             </div>
