@@ -9,28 +9,24 @@ const MyContext = createContext()
 
 const contextValue = {
     navbarLinks:[
+
         {
             id:1,
-            title:"",
-            url:""
-        },
-        {
-            id:2,
             title:"Menu",
             url:"menu"
         },
         {
-            id:3,
+            id:2,
             title:"Favorites",
             url:"favorites"
         },
         {
-            id:4,
+            id:3,
             title:"Blog",
             url:"blog"
         },
         {
-            id:5,
+            id:4,
             title:"Cart",
             url:"cart"
         },

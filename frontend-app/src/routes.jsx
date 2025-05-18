@@ -1,6 +1,9 @@
 import {createBrowserRouter} from "react-router-dom"
 import Layout from "./components/layout"
 import Home from './pages/home'
+import Menu from "./pages/menu"
+
+import {getAllProducts} from "./http"
 
 const routes = createBrowserRouter([
     {
@@ -12,9 +15,11 @@ const routes = createBrowserRouter([
                 element:<Home/>
             },
             {
-                path:'/about',
-                element:<h1>ABout</h1>
+                path:"menu",
+                loader:getAllProducts,
+                element:<Menu/>,
             }
+   
         ]
     }
 ])
