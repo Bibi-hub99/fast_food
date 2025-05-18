@@ -7,7 +7,6 @@ function Menu(){
 
     const {response} = useLoaderData()
     const [menuItems,setMenuItems] = useState([])
-    console.log(menuItems)
 
     return (
         <Suspense fallback={<Spinner/>}>

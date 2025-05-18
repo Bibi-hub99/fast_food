@@ -7,3 +7,12 @@ export const getAllProducts = ()=>{
     const request = axios.get(`${baseURL}/products`)
     return defer({response:request})
 }
+
+export const getSingleProduct = async (productID)=>{
+    try{
+        const {data} = await axios.get(`${baseURL}/products/product/${productID}`)
+        return data.meals
+    }catch(err){
+        console.log(err)
+    }
+}

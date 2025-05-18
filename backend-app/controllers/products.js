@@ -10,10 +10,10 @@ const findAllProducts = async (req,res)=>{
 }
 
 const findSingleProduct = async(req,res)=>{
-    /*const response = await ProductModel.getSingleProduct()*/
     const {productID} = req.params;
-    console.log(productID)
-    res.status(200).json({success:true,meals:{}})
+    const response = await ProductModel.getSingleProduct(productID)
+
+    res.status(200).json({success:true,meals:response})
 }
 
 module.exports = {findAllProducts,findSingleProduct}

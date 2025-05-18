@@ -2,8 +2,8 @@ import {createContext,useContext} from "react"
 import { CiSearch } from "react-icons/ci";
 import { HiMiniBars3 } from "react-icons/hi2";
 import { MdOutlineClear } from "react-icons/md";
-
-
+import { FaHeart } from "react-icons/fa";
+import { FaCartPlus } from "react-icons/fa6";
 
 const MyContext = createContext()
 
@@ -33,7 +33,9 @@ const contextValue = {
     ],
     searchIcon:<CiSearch className={'inline'}/>,
     barsIcon:<HiMiniBars3 className={'inline'}/>,
-    clearIcon:<MdOutlineClear className={'inline'}/>
+    clearIcon:<MdOutlineClear className={'inline'}/>,
+    heartIcon:<FaHeart className={'inline'}/>,
+    cartIcon:<FaCartPlus className={"inline"}/>
 
 }
 

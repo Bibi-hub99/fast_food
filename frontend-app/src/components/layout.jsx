@@ -18,8 +18,6 @@ function Layout(){
         setSearchInput(value)
     }
 
-    console.log(searchInput)
-
     const handleSearch = (evt)=>{
         evt.preventDefault()
         if(searchInput.trim() !== ""){

@@ -45,7 +45,7 @@ productSchema.statics.getSingleProduct = async function getSingleProduct(product
     try{
         const response = await this.findOne({
             _id:{
-                $eq:id
+                $eq:productID
             }
         })
         return response
