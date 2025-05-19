@@ -2,7 +2,7 @@ const {getProductData,likeProduct,dislikeProduct,addComment} = require("../contr
 
 const express = require("express")
 
-const Router = express()
+const Router = express.Router()
 
 Router.get("/:productID",getProductData)
 Router.put("/:productDataID/like",likeProduct)
