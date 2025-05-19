@@ -4,6 +4,9 @@ import { HiMiniBars3 } from "react-icons/hi2";
 import { MdOutlineClear } from "react-icons/md";
 import { FaHeart } from "react-icons/fa";
 import { FaCartPlus } from "react-icons/fa6";
+import { FaThumbsUp } from "react-icons/fa6";
+import { FaThumbsDown } from "react-icons/fa6";
+
 
 const MyContext = createContext()
 
@@ -35,8 +38,9 @@ const contextValue = {
     barsIcon:<HiMiniBars3 className={'inline'}/>,
     clearIcon:<MdOutlineClear className={'inline'}/>,
     heartIcon:<FaHeart className={'inline'}/>,
-    cartIcon:<FaCartPlus className={"inline"}/>
-
+    cartIcon:<FaCartPlus className={"inline"}/>,
+    likeIcon:<FaThumbsUp className={'inline'}/>,
+    dislikeIcon:<FaThumbsDown className={'inline'}/>
 }
 
 export const useMyContext = ()=>{

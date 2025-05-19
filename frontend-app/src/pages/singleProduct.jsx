@@ -1,7 +1,7 @@
-import {Link,useParams} from "react-router-dom"
+import {Link,useParams,NavLink,Outlet} from "react-router-dom"
 import {useMyContext} from "../context"
 import {useEffect,useState} from "react"
-import {getSingleProduct} from "../http"
+import {getSingleProduct,getProductData} from "../http"
 import Spinner from "../components/suspense-fallback"
 import ParamButton from "../components/param-button"
 
@@ -10,24 +10,46 @@ import ImageDisplayer from "../components/image"
 
 function SingleProduct(){
 
+
     const {heartIcon,cartIcon} = useMyContext()
 
     const {productID} = useParams()
     const [singleMeal,setSingleMeal] = useState({})
+    const [productData,setProductData] = useState({})
     const [isLoading,setIsLoading] = useState(false)
 
-    console.log(singleMeal)
+    console.log(singleMeal._id)
+
+    const normalLink = 'w-[30%] block py-2 text-center rounded-t-md font-extrabold'
+    const hoverAndNormal = 'hover:text-orange-500 hover:bg-gray-300 '+normalLink
+    const activeLink = 'bg-orange-500 '+normalLink
+
 
     useEffect(()=>{
         const fetchSingleProduct = async(productID)=>{
-            setIsLoading(true)
             const response = await getSingleProduct(productID)
             if(response){
                 setSingleMeal(response)
             }
+        }
+
+        const fetchProductData = async(productID)=>{
+            try{
+                const response = await getProductData(productID)
+                setProductData(response)
+            }catch(err){
+                console.log(err)
+            }
+        }
+        const fetchAll = async ()=>{
+            setIsLoading(true)
+            await fetchProductData(productID)
+            await fetchSingleProduct(productID)
             setIsLoading(false)
         }
-        fetchSingleProduct(productID)
+
+        fetchAll()
+        
     },[])
 
     if(isLoading){
@@ -50,6 +72,17 @@ function SingleProduct(){
                     btnInnerText={cartIcon}
                     btnStyle={'text-2xl md:text-3xl cursor-pointer'}/>
                 </div>
+            </div>
+            <div className={'text-white flex justify-between mt-2'}>
+
+                <NavLink to={'.'} className={({isActive}) => isActive ? activeLink:hoverAndNormal} end>About</NavLink>
+                <NavLink to={'information'} className={({isActive}) => isActive ? activeLink:hoverAndNormal}>Information</NavLink>
+                <NavLink to={'similar-products'} className={({isActive}) => isActive ? activeLink:hoverAndNormal}>Similar Meals</NavLink>
+
+            </div>
+            <hr className={'bg-orange-500 py-[.1rem] -mt-[.1rem]'}></hr>
+            <div className={'pt-5'}>
+                <Outlet context={[productData,setProductData,singleMeal]}/>
             </div>
         </div>
     )
