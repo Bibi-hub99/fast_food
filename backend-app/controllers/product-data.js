@@ -2,7 +2,6 @@ const ProductDataModel = require("../models/product-data")
 
 const getProductData = async(req,res)=>{
     const {productID} = req.params
-    console.log(productID)
     try{
         const response = await ProductDataModel.getProductData(productID)
         res.status(200).json({success:true,productData:response})
@@ -15,7 +14,6 @@ const likeProduct = async(req,res)=>{
     const {productDataID} = req.params
     try{
         const response = await ProductDataModel.likeProduct(productDataID)
-        console.log(response)
         res.status(200).json({success:true,meal:response})
     }catch(err){
         console.log(err)

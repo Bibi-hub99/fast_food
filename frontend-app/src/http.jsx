@@ -5,14 +5,13 @@ const baseURL = import.meta.env.VITE_BASE_URI
 
 export const getAllProducts = ()=>{
     const request = axios.get(`${baseURL}/products`)
-    console.log(request)
     return defer({response:request})
 }
 
 export const getSingleProduct = async (productID)=>{
     try{
         const {data} = await axios.get(`${baseURL}/products/product/${productID}`)
-        return data.meals
+        return {meals:data.meals,similarMeals:data.similarProducts}
     }catch(err){
         console.log(err)
     }

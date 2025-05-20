@@ -2,7 +2,7 @@ import {useOutletContext} from "react-router-dom"
 
 function AboutProduct(){
 
-    const [productData,setProductData,singleMeal] = useOutletContext()
+    const [productData,setProductData,singleMeal,similarMeals] = useOutletContext()
     
     return (
         <div className={'text-orange-500'}>

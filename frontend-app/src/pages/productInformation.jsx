@@ -11,11 +11,9 @@ function ProductInfo(props){
 
     const {likeIcon,dislikeIcon} = useMyContext()
 
-    const [productData,setProductData,singleMeal] = useOutletContext()
+
+    const [productData,setProductData,singleMeal,similarMeals] = useOutletContext()
     const [commentText,setCommentText] = useState("")
-
-    console.log(productData.comments)
-
 
     let likes = productData !== null ? productData.likes:0
     let dislikes = productData !== null ? productData.dislikes:0
@@ -105,7 +103,7 @@ function ProductInfo(props){
                         handleClick={()=>addMealComment({id:productData._id,comment:commentText})}
                         btnStyle={"ml-auto bg-orange-500 text-black hover:text-white px-2 py-1 rounded-md cursor-pointer"}/>
                     </div>
-                    <div className={"mt-5 mb-5"}>
+                    <div className={"mt-5"}>
                     {
                         typeof(comments) === "object" ? comments.length > 0 ?
                         comments.map((each,index)=>{

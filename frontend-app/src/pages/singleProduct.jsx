@@ -1,4 +1,4 @@
-import {Link,useParams,NavLink,Outlet} from "react-router-dom"
+import {Link,useParams,NavLink,Outlet,useLocation} from "react-router-dom"
 import {useMyContext} from "../context"
 import {useEffect,useState} from "react"
 import {getSingleProduct,getProductData} from "../http"
@@ -14,22 +14,23 @@ function SingleProduct(){
     const {heartIcon,cartIcon} = useMyContext()
 
     const {productID} = useParams()
+    const location = useLocation()
     const [singleMeal,setSingleMeal] = useState({})
+    const [similarMeals,setSimilarMeals] = useState([])
     const [productData,setProductData] = useState({})
     const [isLoading,setIsLoading] = useState(false)
 
-    console.log(singleMeal._id)
 
     const normalLink = 'w-[30%] block py-2 text-center rounded-t-md font-extrabold'
     const hoverAndNormal = 'hover:text-orange-500 hover:bg-gray-300 '+normalLink
     const activeLink = 'bg-orange-500 '+normalLink
 
-
     useEffect(()=>{
         const fetchSingleProduct = async(productID)=>{
             const response = await getSingleProduct(productID)
             if(response){
-                setSingleMeal(response)
+                setSingleMeal(response.meals)
+                setSimilarMeals(response.similarMeals)
             }
         }
 
@@ -50,7 +51,7 @@ function SingleProduct(){
 
         fetchAll()
         
-    },[])
+    },[productID])
 
     if(isLoading){
         return (
@@ -77,12 +78,12 @@ function SingleProduct(){
 
                 <NavLink to={'.'} className={({isActive}) => isActive ? activeLink:hoverAndNormal} end>About</NavLink>
                 <NavLink to={'information'} className={({isActive}) => isActive ? activeLink:hoverAndNormal}>Information</NavLink>
-                <NavLink to={'similar-products'} className={({isActive}) => isActive ? activeLink:hoverAndNormal}>Similar Meals</NavLink>
+                <NavLink to={'similar-products'} className={({isActive}) => isActive ? activeLink:hoverAndNormal}>You might like</NavLink>
 
             </div>
             <hr className={'bg-orange-500 py-[.1rem] -mt-[.1rem]'}></hr>
-            <div className={'pt-5'}>
-                <Outlet context={[productData,setProductData,singleMeal]}/>
+            <div className={'pt-5 mb-5'}>
+                <Outlet context={[productData,setProductData,singleMeal,similarMeals]}/>
             </div>
         </div>
     )
