@@ -45,10 +45,31 @@ productSchema.statics.getSingleProduct = async function getSingleProduct(product
     try{
         const response = await this.findOne({
             _id:{
-                $eq:id
+                $eq:productID
             }
         })
         return response
+    }catch(err){
+        console.log(err)
+    }
+
+}
+
+
+productSchema.methods.findSimilarProducts = async function findSimilarProducts(){
+    try{
+        return await mongoose.model("products").find({
+            $and:[
+                {
+                    tags:{
+                        $in:this.tags
+                    }
+                },
+                {
+                    _id:{$ne:this._id}
+                }
+            ]
+        })
     }catch(err){
         console.log(err)
     }

@@ -2,7 +2,7 @@ const ProductModel = require("../models/products")
 
 const findAllProducts = async (req,res)=>{
     try{
-        const response = await ProductModel.findAllProducts()
+        const response = await ProductModel.find({})
         res.status(200).json({success:true,meals:response})
     }catch(err){
         console.log(err)
@@ -10,10 +10,11 @@ const findAllProducts = async (req,res)=>{
 }
 
 const findSingleProduct = async(req,res)=>{
-    /*const response = await ProductModel.getSingleProduct()*/
     const {productID} = req.params;
-    console.log(productID)
-    res.status(200).json({success:true,meals:{}})
+    const response = await ProductModel.getSingleProduct(productID)
+    const similar = await response.findSimilarProducts()
+    res.status(200).json({success:true,meals:response,similarProducts:similar})
 }
+
 
 module.exports = {findAllProducts,findSingleProduct}
