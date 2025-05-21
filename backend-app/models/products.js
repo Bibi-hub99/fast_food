@@ -75,6 +75,20 @@ productSchema.methods.findSimilarProducts = async function findSimilarProducts()
     }
 }
 
+productSchema.statics.findByCategory = async function findByCategory(category){
+    try{
+        const response = await this.find({
+            category:{
+                $eq:category
+            }
+        })
+        return response
+        console.log(response)
+    }catch(err){
+        console.log(err)
+    }
+}
+
 const ProductModel = mongoose.model('products',productSchema,'products')
 
 module.exports = ProductModel

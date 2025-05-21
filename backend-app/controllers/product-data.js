@@ -45,4 +45,6 @@ const addComment = async(req,res)=>{
     }
 }
 
+
+
 module.exports = {getProductData,likeProduct,dislikeProduct,addComment}

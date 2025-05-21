@@ -6,7 +6,7 @@ function ProductCard(props){
     return (
         <div className={props.cardStyle}>
             <div className={'h-[200px]'}>
-                <Link to={props.mealID}>
+                <Link to={props.mealID} relative={props.isRelative ? "path":"route"}>
                     <ImageDisplayer imageURL={props.imageURL} imageStyle={'w-full h-full object-cover rounded-md'}/>
                 </Link>
             </div>

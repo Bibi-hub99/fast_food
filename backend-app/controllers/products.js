@@ -16,5 +16,14 @@ const findSingleProduct = async(req,res)=>{
     res.status(200).json({success:true,meals:response,similarProducts:similar})
 }
 
+const getByCategory = async (req,res)=>{
+    try{
+        const {query,limit} = req.query
+        const response = await ProductModel.findByCategory(query)
+        res.status(200).json({success:true,meals:response})
+    }catch(err){
+        console.log(err)
+    }
+}
 
-module.exports = {findAllProducts,findSingleProduct}
+module.exports = {findAllProducts,findSingleProduct,getByCategory}

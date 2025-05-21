@@ -10,7 +10,6 @@ function Navbar(props){
     const justLink = 'hover:underline'
     const activeLink = 'text-orange-500'
 
-
     const navbarLinkMap = navbarLinks.map((each)=>{
         return (
             <li key={`navbarLinks${each.id}`} className={'ml-3'}><NavLink to={each.url} className={({isActive}) => isActive ? activeLink:justLink}>{each.title}</NavLink></li>
@@ -38,7 +37,7 @@ function Navbar(props){
                             inputHolder={"Search..."}
                             inputID={'search-input'}
                             inputChange={props.inputChange}
-                            inputValue={props.searchInput}
+                            inputValue={props.inputValue}
                             />
                             <Button 
                             btnInnerText={searchIcon}

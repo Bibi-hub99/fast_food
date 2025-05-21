@@ -16,7 +16,7 @@ function Categories(){
     const fastFood = 'fast-food'
 
     return (
-        <div className={'text-white mb-5 grid grid-cols-4 gap-2 md:grid-cols-6 lg:grid-cols-7'}>
+        <div className={'text-white mb-5 grid grid-cols-4 gap-2 md:grid-cols-6 lg:grid-cols-8'}>
             <NavLink to={'.'} className={({isActive}) => isActive ? activeLink:inActiveLink} end>All</NavLink>
             <NavLink to={`categories?query=${fastFood}`} className={fastFood === searcher.get("query") ? openCategory:closedCategory}>Fast Food</NavLink>
             {foodCategories.map((each)=>{
