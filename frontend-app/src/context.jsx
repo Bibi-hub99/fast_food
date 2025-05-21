@@ -34,6 +34,33 @@ const contextValue = {
             url:"cart"
         },
     ],
+    foodCategories:[
+        {
+            id:1,
+            title:"Cooked",
+            url_query:"cooked"
+        },
+        {
+            id:2,
+            title:"Baked",
+            url_query:"baked"
+        },
+        {
+            id:3,
+            title:"Drinks",
+            url_query:"drinks"
+        },
+        {
+            id:4,
+            title:"Salad",
+            url_query:"salad"
+        },
+        {
+            id:5,
+            title:"Coffee",
+            url_query:'coffee'
+        }
+    ],
     searchIcon:<CiSearch className={'inline'}/>,
     barsIcon:<HiMiniBars3 className={'inline'}/>,
     clearIcon:<MdOutlineClear className={'inline'}/>,

@@ -2,8 +2,8 @@ import {createBrowserRouter} from "react-router-dom"
 import {lazy,Suspense} from "react"
 import Layout from "./components/layout"
 import Home from './pages/home'
-import Menu from "./pages/menu"
 import SingleProduct from "./pages/singleProduct"
+import AllMenuProducts from "./pages/all-menu-products"
 import Spinner from "./components/suspense-fallback"
 
 import {getAllProducts} from "./http"
@@ -11,6 +11,9 @@ import {getAllProducts} from "./http"
 const LazyAboutProduct = lazy(()=>import("./pages/productAbout"))
 const LazyProductInfo = lazy(()=>import("./pages/productInformation"))
 const LazySimilarProducts = lazy(()=>import("./pages/similarProducts"))
+const LazyCategory = lazy(()=>import("./pages/category"))
+const LazyMenu = lazy(()=>import("./pages/menu"))
+
 
 const routes = createBrowserRouter([
     {
@@ -23,13 +26,28 @@ const routes = createBrowserRouter([
             },
             {
                 path:"menu",
-                loader:getAllProducts,
                 element:(
                     <Suspense fallback={<Spinner/>}>
-                        <Menu/>
+                        <LazyMenu/>
                     </Suspense>
                 ),
-            }
+                children:[
+                    {
+                        index:true,
+                        loader:getAllProducts,
+                        element:<AllMenuProducts/>
+                    },
+                    {
+                        path:"categories",
+                        element:(
+                            <Suspense fallback={<Spinner/>}>
+                                <LazyCategory/>
+                            </Suspense>
+                        )
+                    }
+                ]
+            },
+
    
         ]
     },
