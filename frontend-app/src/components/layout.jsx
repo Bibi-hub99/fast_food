@@ -1,6 +1,6 @@
 import Navbar from "./navbar"
 import {Outlet,useMatch,useNavigate} from "react-router-dom"
-import {useState} from "react"
+import {useState,useEffect} from "react"
 import Modal from "./modal"
 import SlideMenu from "./slide-menu"
 function Layout(){
@@ -41,6 +41,7 @@ function Layout(){
         setSlideWidth('0%')   
     }
 
+
     return (
         <div>
             <Navbar 
@@ -62,7 +63,6 @@ function Layout(){
             hideSearchModal={hideSearchModal}
             />
             <SlideMenu width={slideWidth} hideSlideMenu={hideSlideMenu}/>
-
         </div>
     )
 

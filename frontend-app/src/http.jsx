@@ -56,3 +56,12 @@ export const addComment = async({productDataID,productComment})=>{
         console.log(err)
     }
 }
+
+export const findByCategory = async({query,limit})=>{
+    try{
+        const response = await axios.get(`${baseURL}/products/categories?query=${query}&limit=${limit}`)
+        return response.data.meals
+    }catch(err){
+        console.log()
+    }
+}

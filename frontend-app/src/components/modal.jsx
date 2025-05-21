@@ -35,7 +35,7 @@ function Modal(props){
                     btnType={'submit'}
                     handleClick={props.handleSearch}
                     btnInnerText={searchIcon}
-                    btnStyle={'absolute right-2 top-[48%] py-2 bg-orange-500 px-5 rounded-md text-white'}/>
+                    btnStyle={'absolute right-2 top-[48%] py-2 bg-orange-500 px-5 rounded-md text-white cursor-pointer'}/>
                 </div>
 
             </div>}

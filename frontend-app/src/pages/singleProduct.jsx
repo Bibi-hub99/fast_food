@@ -1,4 +1,4 @@
-import {Link,useParams,NavLink,Outlet,useLocation} from "react-router-dom"
+import {Link,useParams,NavLink,Outlet} from "react-router-dom"
 import {useMyContext} from "../context"
 import {useEffect,useState} from "react"
 import {getSingleProduct,getProductData} from "../http"
@@ -14,7 +14,6 @@ function SingleProduct(){
     const {heartIcon,cartIcon} = useMyContext()
 
     const {productID} = useParams()
-    const location = useLocation()
     const [singleMeal,setSingleMeal] = useState({})
     const [similarMeals,setSimilarMeals] = useState([])
     const [productData,setProductData] = useState({})

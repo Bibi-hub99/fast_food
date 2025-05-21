@@ -52,13 +52,18 @@ const contextValue = {
         },
         {
             id:4,
-            title:"Salad",
-            url_query:"salad"
+            title:"Healthy",
+            url_query:"healthy"
         },
         {
             id:5,
             title:"Coffee",
             url_query:'coffee'
+        },
+        {
+            id:6,
+            title:"Dessert",
+            url_query:"dessert"
         }
     ],
     searchIcon:<CiSearch className={'inline'}/>,
