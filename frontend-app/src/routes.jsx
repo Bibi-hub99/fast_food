@@ -4,6 +4,7 @@ import Layout from "./components/layout"
 import Home from './pages/home'
 import SingleProduct from "./pages/singleProduct"
 import AllMenuProducts from "./pages/all-menu-products"
+import SearchResults from "./pages/search-results"
 import Spinner from "./components/suspense-fallback"
 
 import {getAllProducts} from "./http"
@@ -15,6 +16,7 @@ const LazyCategory = lazy(()=>import("./pages/category"))
 const LazyMenu = lazy(()=>import("./pages/menu"))
 const LazySingleCategory = lazy(()=>import("./pages/single-category"))
 const LazySimilarCategory = lazy(()=>import("./pages/similarCategory"))
+
 
 const routes = createBrowserRouter([
 
@@ -118,6 +120,10 @@ const routes = createBrowserRouter([
                 )
             }
         ]
+    },
+    {
+        path:"search",
+        element:<SearchResults/>
     }
 ])
 

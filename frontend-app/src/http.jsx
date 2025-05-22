@@ -65,3 +65,20 @@ export const findByCategory = async({query,limit})=>{
         console.log()
     }
 }
+
+export const querySearch = async({
+    searchTerm,
+    minPriceStart,minPriceEnd,
+    midPriceStart,midPriceEnd,
+    highPriceStart,highPriceEnd,
+    limit
+})=>{
+    try{
+        const query = `${baseURL}/products/search?searchTerm=${searchTerm}&minPriceStart=${minPriceStart}&minPriceEnd=${minPriceEnd}&midPriceStart=${midPriceStart}&midPriceEnd=${midPriceEnd}highPriceStart=${highPriceStart}&highPriceEnd=${highPriceEnd}&limit=${limit}`
+        const response = await axios.get(query)
+        console.log(response)
+        return response
+    }catch(err){
+        console.log(err)
+    }
+}

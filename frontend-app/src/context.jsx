@@ -6,6 +6,7 @@ import { FaHeart } from "react-icons/fa";
 import { FaCartPlus } from "react-icons/fa6";
 import { FaThumbsUp } from "react-icons/fa6";
 import { FaThumbsDown } from "react-icons/fa6";
+import { CgMenuGridO } from "react-icons/cg";
 
 
 const MyContext = createContext()
@@ -72,7 +73,8 @@ const contextValue = {
     heartIcon:<FaHeart className={'inline'}/>,
     cartIcon:<FaCartPlus className={"inline"}/>,
     likeIcon:<FaThumbsUp className={'inline'}/>,
-    dislikeIcon:<FaThumbsDown className={'inline'}/>
+    dislikeIcon:<FaThumbsDown className={'inline'}/>,
+    sortIcon:<CgMenuGridO className={"inline"}/>
 }
 
 export const useMyContext = ()=>{
