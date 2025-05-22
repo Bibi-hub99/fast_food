@@ -83,7 +83,94 @@ productSchema.statics.findByCategory = async function findByCategory(category){
             }
         })
         return response
+    }catch(err){
+        console.log(err)
+    }
+}
+
+productSchema.statics.querySearch = async function querySearch
+({searchTerm,
+minPriceStart,
+minPriceEnd,
+midPriceStart,
+midPriceEnd,
+highPriceStart,
+highPriceEnd,
+limit}){
+    try{
+
+        let response
+        let lowFilter = []
+        let midFilter = []
+        let highFilter = []
+
+        if(searchTerm){
+            response = await this.find({
+                $text:{
+                    $search:`\"${searchTerm}\"`
+                }
+            })
+        }
+
+        /*lowFilter = await response.find({
+            $and:[
+                {
+                    price:{
+                        $gte:minPriceStart
+                    }
+                },
+                {
+                    price:{
+                        $lte:minPriceEnd
+                    }
+                }
+            ]
+        })
+
+        midFilter = await response.find({
+            $and:[
+                {
+                    price:{
+                        $not:{
+                            $lt:midPriceStart
+                        }
+                    }
+                },
+                {
+                    price:{
+                        $not:{
+                            $gt:midPriceEnd
+                        }
+                    }
+                }
+            ]
+        })
+
+        highFilter = await response.find({
+            $and:[
+                {
+                    price:{
+                        $gte:highPriceStart
+                    }
+                },
+                {
+                    price:{
+                        $lte:highPriceEnd
+                    }
+                }
+            ]
+        })
+
+        response = [...lowFilter,midFilter,highFilter]
+
+        if(limit){
+            response = await response.find({}).limit(limit)
+        }
+        */
+        console.log(searchTerm)
         console.log(response)
+        return response;
+
     }catch(err){
         console.log(err)
     }
