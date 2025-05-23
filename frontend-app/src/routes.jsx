@@ -16,7 +16,10 @@ const LazyCategory = lazy(()=>import("./pages/category"))
 const LazyMenu = lazy(()=>import("./pages/menu"))
 const LazySingleCategory = lazy(()=>import("./pages/single-category"))
 const LazySimilarCategory = lazy(()=>import("./pages/similarCategory"))
-
+const LazySearchSingle = lazy(()=>import("./pages/search-single"))
+const LazySingleAbout = lazy(()=>import("./pages/search-singleAbout"))
+const LazySingleInformation = lazy(()=>import("./pages/search-singleInformation"))
+const LazySingleSimilar = lazy(()=>import("./pages/search-singleSimilar"))
 
 const routes = createBrowserRouter([
 
@@ -124,6 +127,40 @@ const routes = createBrowserRouter([
     {
         path:"search",
         element:<SearchResults/>
+    },
+    {
+        path:"search/:productID",
+        element:(
+            <Suspense fallback={<Spinner/>}>
+                <LazySearchSingle/>
+            </Suspense>
+        ),
+        children:[
+            {
+                index:true,
+                element:(
+                    <Suspense fallback={<Spinner/>}>
+                        <LazySingleAbout/>
+                    </Suspense>
+                )
+            },
+            {
+                path:"information",
+                element:(
+                    <Suspense fallback={<Spinner/>}>
+                        <LazySingleInformation/>
+                    </Suspense>
+                )
+            },
+            {
+                path:"similar-products",
+                element:(
+                    <Suspense fallback={<Spinner/>}>
+                        <LazySingleSimilar/>
+                    </Suspense>
+                )
+            }
+        ]
     }
 ])
 

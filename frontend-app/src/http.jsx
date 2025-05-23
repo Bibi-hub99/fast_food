@@ -74,11 +74,10 @@ export const querySearch = async({
     limit
 })=>{
     try{
-        const query = `${baseURL}/products/search?searchTerm=${searchTerm}&minPriceStart=${minPriceStart}&minPriceEnd=${minPriceEnd}&midPriceStart=${midPriceStart}&midPriceEnd=${midPriceEnd}highPriceStart=${highPriceStart}&highPriceEnd=${highPriceEnd}&limit=${limit}`
-        const response = await axios.get(query)
-        console.log(response)
-        return response
+        const query = `${baseURL}/products/search?searchTerm=${searchTerm}&minPriceStart=${minPriceStart}&minPriceEnd=${minPriceEnd}&midPriceStart=${midPriceStart}&midPriceEnd=${midPriceEnd}&highPriceStart=${highPriceStart}&highPriceEnd=${highPriceEnd}&limit=${limit}`
+        const {data} = await axios.get(query)
+        return data.meals
     }catch(err){
-        console.log(err)
+        console.log(err.message)
     }
 }

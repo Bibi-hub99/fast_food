@@ -97,83 +97,48 @@ midPriceEnd,
 highPriceStart,
 highPriceEnd,
 limit}){
+    
     try{
 
-        let response
-        let lowFilter = []
-        let midFilter = []
-        let highFilter = []
+        const query = {}
+        const filters = []
 
         if(searchTerm){
-            response = await this.find({
-                $text:{
-                    $search:`\"${searchTerm}\"`
-                }
-            })
+            query.$text = {
+                $search:`\"${searchTerm}\"`
+            }
         }
 
-        /*lowFilter = await response.find({
-            $and:[
-                {
-                    price:{
-                        $gte:minPriceStart
-                    }
-                },
-                {
-                    price:{
-                        $lte:minPriceEnd
-                    }
-                }
-            ]
-        })
+        if(minPriceStart !== "undefined"){
+            filters.push({price:{$gte:Number(minPriceStart),$lte:Number(minPriceEnd)}})
+        }
 
-        midFilter = await response.find({
-            $and:[
-                {
-                    price:{
-                        $not:{
-                            $lt:midPriceStart
-                        }
-                    }
-                },
-                {
-                    price:{
-                        $not:{
-                            $gt:midPriceEnd
-                        }
-                    }
-                }
-            ]
-        })
+        if(midPriceStart !== "undefined"){
+            filters.push({price:{$gte:Number(midPriceStart),$lte:Number(midPriceEnd)}})
+        }
 
-        highFilter = await response.find({
-            $and:[
-                {
-                    price:{
-                        $gte:highPriceStart
-                    }
-                },
-                {
-                    price:{
-                        $lte:highPriceEnd
-                    }
-                }
-            ]
-        })
+        if(highPriceStart !== "undefined"){
+            filters.push({price:{$gte:parseFloat(highPriceStart),$lte:parseFloat(highPriceEnd)}})
+        }
 
-        response = [...lowFilter,midFilter,highFilter]
+        if(filters.length > 0){
+            query.$or = filters
+        }
+
+        let queryBuilder = this.find(query)
 
         if(limit){
-            response = await response.find({}).limit(limit)
+            queryBuilder = queryBuilder.limit(Number(limit))
         }
-        */
-        console.log(searchTerm)
-        console.log(response)
-        return response;
+
+        console.log(filters)
+
+        return await queryBuilder
 
     }catch(err){
-        console.log(err)
+        console.log(err.message)
     }
+
 }
 
 const ProductModel = mongoose.model('products',productSchema,'products')
