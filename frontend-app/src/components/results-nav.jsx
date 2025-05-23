@@ -36,7 +36,8 @@ function SearchNav(props){
                     <Button
                     btnInnerText={sortIcon}
                     btnType={"button"}
-                    btnStyle={"md:text-[1.9rem] cursor-pointer"}
+                    btnStyle={"cursor-pointer md:hidden"}
+                    handleClick={()=>props.toggleOpenFilter(props.state)}
                     />
                 </div>
             </div>

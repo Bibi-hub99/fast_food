@@ -7,6 +7,7 @@ import { FaCartPlus } from "react-icons/fa6";
 import { FaThumbsUp } from "react-icons/fa6";
 import { FaThumbsDown } from "react-icons/fa6";
 import { CgMenuGridO } from "react-icons/cg";
+import { MdClear } from "react-icons/md";
 
 
 const MyContext = createContext()
@@ -67,6 +68,32 @@ const contextValue = {
             url_query:"dessert"
         }
     ],
+    filters:[
+        {
+            id:1,
+            text:"R0 - R100",
+            title:"min",
+            priceRangeStart:0,
+            priceRangeEnd:100,
+            isChecked:false
+        },
+        {
+            id:2,
+            text:"R101 - R200",
+            title:"mid",
+            priceRangeStart:101,
+            priceRangeEnd:200,
+            isChecked:false
+        },
+        {
+            id:3,
+            text:"R201 - R300",
+            title:"high",
+            priceRangeStart:201,
+            priceRangeEnd:300,
+            isChecked:false
+        }
+    ],
     searchIcon:<CiSearch className={'inline'}/>,
     barsIcon:<HiMiniBars3 className={'inline'}/>,
     clearIcon:<MdOutlineClear className={'inline'}/>,
@@ -74,7 +101,8 @@ const contextValue = {
     cartIcon:<FaCartPlus className={"inline"}/>,
     likeIcon:<FaThumbsUp className={'inline'}/>,
     dislikeIcon:<FaThumbsDown className={'inline'}/>,
-    sortIcon:<CgMenuGridO className={"inline"}/>
+    sortIcon:<CgMenuGridO className={"inline"}/>,
+    clearIcon:<MdClear/>
 }
 
 export const useMyContext = ()=>{
