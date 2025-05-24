@@ -6,6 +6,9 @@ import SingleProduct from "./pages/singleProduct"
 import AllMenuProducts from "./pages/all-menu-products"
 import SearchResults from "./pages/search-results"
 import Spinner from "./components/suspense-fallback"
+import Admin from "./pages/admin"
+import AdminHome from "./pages/admin-home"
+import AddProductPage from "./pages/admin-addProduct"
 
 import {getAllProducts} from "./http"
 
@@ -159,6 +162,21 @@ const routes = createBrowserRouter([
                         <LazySingleSimilar/>
                     </Suspense>
                 )
+            }
+        ]
+    },
+    {
+        path:"admin",
+        element:<Admin/>,
+        children:[
+            {
+                index:true,
+                element:<AdminHome/>,
+                loader:getAllProducts
+            },
+            {
+                path:"add-product",
+                element:<AddProductPage/>
             }
         ]
     }

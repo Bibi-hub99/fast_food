@@ -42,4 +42,27 @@ const querySearch = async(req,res)=>{
     }
 }
 
-module.exports = {findAllProducts,findSingleProduct,getByCategory,querySearch}
+const updateProduct = async(req,res)=>{
+
+    const {productID} = req.params
+    const {name,imageURL,price,description,category,tags,locations} = req.body
+    const updateObj = {
+        _id:productID,
+        imageURL:imageURL,
+        name:name,
+        price:price,
+        description:description,
+        category:category,
+        tags:tags,
+        locations:locations
+    }
+    try{
+        const response = await ProductModel.productUpdate(updateObj)
+        res.status(200).json({success:true,meals:response})
+    }catch(err){
+        console.log(err)
+    }
+
+}
+
+module.exports = {findAllProducts,findSingleProduct,getByCategory,querySearch,updateProduct}

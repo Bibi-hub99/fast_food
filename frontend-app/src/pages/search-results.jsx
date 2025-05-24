@@ -171,7 +171,7 @@ function SearchResults(){
 
                 <div className={"md:w-[75%] md:ml-[24%] lg:w-[80%] lg:ml-[19%] xl:w-[84%] xl:ml-[16%] rounded-md py-1 px-1 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"}>
                     {
-                        meals.map((each)=>{
+                        meals.length > 0 ? meals.map((each)=>{
                             return (
                                 <ProductCard
                                 key={`results${each._id}`}
@@ -182,7 +182,11 @@ function SearchResults(){
                                 mealPrice={each.price}
                                 />
                             )
-                        })
+                        }):(
+                            <div>
+                                {<p>No available products for this search</p>}
+                            </div>
+                        )
                     }
 
                 </div>

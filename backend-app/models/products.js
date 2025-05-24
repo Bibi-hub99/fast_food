@@ -27,7 +27,7 @@ const productSchema = new mongoose.Schema({
     tags:[String],
     locations:[
         {
-            town:String
+            town:String,
         }
     ]
 })
@@ -109,15 +109,17 @@ limit}){
             }
         }
 
-        if(minPriceStart !== "undefined"){
+        console.log(typeof(minPriceStart))
+
+        if(minPriceStart !== "undefined" && minPriceStart !== undefined){
             filters.push({price:{$gte:Number(minPriceStart),$lte:Number(minPriceEnd)}})
         }
 
-        if(midPriceStart !== "undefined"){
+        if(midPriceStart !== "undefined" && midPriceStart !== undefined){
             filters.push({price:{$gte:Number(midPriceStart),$lte:Number(midPriceEnd)}})
         }
 
-        if(highPriceStart !== "undefined"){
+        if(highPriceStart !== "undefined" && highPriceEnd !== undefined){
             filters.push({price:{$gte:parseFloat(highPriceStart),$lte:parseFloat(highPriceEnd)}})
         }
 
@@ -137,6 +139,28 @@ limit}){
 
     }catch(err){
         console.log(err.message)
+    }
+
+}
+
+productSchema.statics.productUpdate = async function productUpdate({_id,name,imageURL,price,description,category,tags,locations}){
+
+    try{
+        await this.findByIdAndUpdate(_id,{
+            $set:{
+                name:name,
+                imageURL:imageURL,
+                price:parseFloat(price),
+                description:description,
+                category:category,
+                tags:tags,
+                locations:locations
+            }
+        })
+        const response = await this.find({})
+        return response
+    }catch(err){
+        console.log(err)
     }
 
 }

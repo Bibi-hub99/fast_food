@@ -8,6 +8,7 @@ import { FaThumbsUp } from "react-icons/fa6";
 import { FaThumbsDown } from "react-icons/fa6";
 import { CgMenuGridO } from "react-icons/cg";
 import { MdClear } from "react-icons/md";
+import { FaPenAlt } from "react-icons/fa";
 
 
 const MyContext = createContext()
@@ -96,13 +97,13 @@ const contextValue = {
     ],
     searchIcon:<CiSearch className={'inline'}/>,
     barsIcon:<HiMiniBars3 className={'inline'}/>,
-    clearIcon:<MdOutlineClear className={'inline'}/>,
     heartIcon:<FaHeart className={'inline'}/>,
     cartIcon:<FaCartPlus className={"inline"}/>,
     likeIcon:<FaThumbsUp className={'inline'}/>,
     dislikeIcon:<FaThumbsDown className={'inline'}/>,
     sortIcon:<CgMenuGridO className={"inline"}/>,
-    clearIcon:<MdClear/>
+    clearIcon:<MdClear/>,
+    penIcon:<FaPenAlt/>
 }
 
 export const useMyContext = ()=>{

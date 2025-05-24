@@ -7,7 +7,14 @@ function Input(props){
     }
 
     return (
-        <input type={props.inputType} onKeyDown={stopSubmit} id={props.inputID} className={props.inputStyle} onChange={props.inputChange} value={props.inputValue} placeholder={props.inputHolder}></input>
+        <input type={props.inputType}
+         onKeyDown={stopSubmit} 
+         id={props.inputID} 
+         className={props.inputStyle} 
+         onChange={props.inputChange} 
+         value={props.inputValue}
+         name={props.inputName} 
+         placeholder={props.inputHolder}></input>
     )
 
 }

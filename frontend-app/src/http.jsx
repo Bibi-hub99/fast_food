@@ -81,3 +81,22 @@ export const querySearch = async({
         console.log(err.message)
     }
 }
+
+export const updateProduct = async ({_id,name,imageURL,price,description,category,tags,locations})=>{
+    try{
+        const {data} = await axios.put(`${baseURL}/products/product/${_id}/update`,{
+            name,
+            imageURL,
+            price,
+            description,
+            category,
+            tags,
+            locations
+        })
+
+        return data.meals
+        
+    }catch(err){
+        console.log(err)
+    }
+}

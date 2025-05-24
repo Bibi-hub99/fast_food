@@ -61,7 +61,9 @@ function Category(){
                             mealPrice={each.price}
                             />
                         )
-                    }):<p className={"text-red-700 mt-20 text-center text-[2rem]"}>No Meals Available for this category</p>
+                    }):(<div>
+                            {<p className={"text-red-700 mt-20 text-center text-[2rem]"}>No Meals Available for this category</p>}
+                        </div>)
                 }
             </div>
         </div>
