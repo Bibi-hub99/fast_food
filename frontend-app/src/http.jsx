@@ -100,3 +100,23 @@ export const updateProduct = async ({_id,name,imageURL,price,description,categor
         console.log(err)
     }
 }
+
+export const addProduct = async({name,imageURL,price,description,category,tags,locations})=>{
+
+    try{
+
+        const response = await axios.post(`${baseURL}/products/add-product`,{
+           name,
+           imageURL,
+           price,
+           description,
+           category,
+           tags,
+           locations 
+        })
+
+    }catch(err){
+        console.log(err)
+    }
+
+}
