@@ -8,6 +8,8 @@ import Spinner from "../components/suspense-fallback"
 import ProductCard from "../components/productCard"
 import MobileFilter from "../components/mobileFilter"
 import Button from "../components/button"
+import Banner from "../components/banner"
+
 
 function SearchResults(){
 
@@ -19,8 +21,115 @@ function SearchResults(){
     const [isLoading,setIsLoading] = useState(false)
     const [openFilter,setOpenFilter] = useState(false)
     const [filterState,setFilterStates] = useState(JSON.parse(sessionStorage.getItem("filter-ranges"))|| filters)
+    const [myFavs,setMyFavs] = useState(JSON.parse(localStorage.getItem("my-favorite-food")) || [])
+    const [myCart,setMyCart] = useState(JSON.parse(localStorage.getItem("my-cart-food")) || [])
+
+    const [bannerState,setBannerState] = useState({
+        state:false,
+        message:"",
+        bgColor:'red'
+    })
+
+    const handleBanner = ({state,message,bgColor})=>{
+
+        setBannerState((oldValue)=>{
+            return {
+                state:state,
+                message:message,
+                bgColor:bgColor
+            }
+        })
+
+    }    
 
     const query = searcher.get("query")
+
+    const addToCart = (_id)=>{
+
+        const findInMeals = meals.find((each)=>{
+            return each._id === _id
+        })
+
+        if(myCart.length < 1){
+
+            setMyCart((oldValue)=>{
+                return [
+                    ...oldValue,
+                    {...findInMeals}
+                ]
+            })
+
+            handleBanner({state:true,message:"added to cart",bgColor:"green"})
+            setTimeout(()=>handleBanner({state:false,message:"",bgColor:""}),2000)              
+
+        }else{
+
+            const findInCart = myCart.find((each)=>{
+                return each._id === _id
+            })
+
+            if(!findInCart){
+
+                setMyCart((oldValue)=>{
+                    return [
+                        ...oldValue,
+                        {...findInMeals}
+                    ]
+                })
+                handleBanner({state:true,message:"added to cart",bgColor:"green"})
+                setTimeout(()=>handleBanner({state:false,message:"",bgColor:""}),2000)                   
+        
+            }else{
+                handleBanner({state:true,message:"already exist in cart",bgColor:'red'})
+                setTimeout(()=>handleBanner({state:false,message:"",bgColor:""}),2000)                
+            }
+        }
+
+    }
+
+    const addToFavs = (_id)=>{
+
+        const findInMeals = meals.find((each)=>{
+            return each._id === _id
+        })
+
+        if(myFavs.length < 1){
+            setMyFavs((oldValue)=>{
+                return [
+                    ...oldValue,
+                    {...findInMeals}
+                ]
+            })
+            handleBanner({state:true,message:'added to favorites',bgColor:'green'})
+            setTimeout(()=>handleBanner({state:false,message:"",bgColor:""}),2000)        
+        }else{
+
+            const findInFavs = myFavs.find((each)=>{
+                return each._id === _id
+            })
+        
+            if(!findInFavs){
+                setMyFavs((oldValue)=>{
+                    return [...oldValue,{...findInMeals}]
+                })
+                handleBanner({state:true,message:'added to favorites',bgColor:'green'})
+                setTimeout(()=>handleBanner({state:false,message:"",bgColor:""}),2000)    
+            }else{
+                handleBanner({state:true,message:"already exist in favorites",bgColor:'red'})
+                setTimeout(()=>handleBanner({state:false,message:"",bgColor:""}),2000)         
+            }
+
+        }
+
+    }
+
+    useEffect(()=>{
+        localStorage.setItem("my-cart-food",JSON.stringify(myCart))
+    },[myCart])
+
+    useEffect(()=>{
+        localStorage.setItem("my-favorite-food",JSON.stringify(myFavs))
+    },[myFavs])    
  
     useEffect(()=>{
         const queryMeals = async ()=>{
@@ -180,6 +289,10 @@ function SearchResults(){
                                 imageURL={each.imageURL}
                                 mealName={each.name}
                                 mealPrice={each.price}
+                                meal_id={each._id}
+                                addToCart={addToCart}
+                                addToFavs={addToFavs}
+                                byPass={true}
                                 />
                             )
                         }):(
@@ -196,6 +309,8 @@ function SearchResults(){
             <div>
 
             </div>
+            <Banner bannerState={bannerState.state} bannerBgColor={bannerState.bgColor} bannerMessage={bannerState.message}/>
+
         </div>
     )
 

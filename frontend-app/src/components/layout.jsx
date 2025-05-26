@@ -43,7 +43,7 @@ function Layout(){
 
 
     return (
-        <div>
+        <div className={''}>
             <Navbar 
             inputValue={searchInput}
              inputChange={handleChange} 
@@ -51,11 +51,11 @@ function Layout(){
              showSearchModal={showSearchModal}
              showSlideMenu={showSlideMenu}/>
 
-            <div className={isHome}>
+            <div className={`${isHome} max-w-[100%] box-border`}>
                 <Outlet/>
             </div>
             <Modal 
-            modalStyle={'md:hidden'} 
+            modalStyle={'md:hidden z-30'} 
             modalOpen={modalState}  
             inputValue={searchInput} 
             inputChange={handleChange}

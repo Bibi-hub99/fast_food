@@ -5,6 +5,8 @@ import {getSingleProduct,getProductData} from "../http"
 import Spinner from "../components/suspense-fallback"
 import ParamButton from "../components/param-button"
 import ImageDisplayer from "../components/image"
+import Banner from "../components/banner"
+
 
 function SearchSingle(){
 
@@ -15,8 +17,111 @@ function SearchSingle(){
     const [similarMeals,setSimilarMeals] = useState([])
     const [productData,setProductData] = useState({})
     const [isLoading,setIsLoading] = useState(false)
+    const [myFavs,setMyFavs] = useState(JSON.parse(localStorage.getItem("my-favorite-food")) || [])
+    const [myCart,setMyCart] = useState(JSON.parse(localStorage.getItem("my-cart-food")) || [])
+
+
+    const [bannerState,setBannerState] = useState({
+        state:false,
+        message:"",
+        bgColor:'red'
+    })
+
+    const handleBanner = ({state,message,bgColor})=>{
+
+        setBannerState((oldValue)=>{
+            return {
+                state:state,
+                message:message,
+                bgColor:bgColor
+            }
+        })
+
+    }
+    
+    const addToCart = (_id)=>{
+
+        if(myCart.length < 1){
+
+            setMyCart((oldValue)=>{
+                return [
+                    ...oldValue,
+                    {...singleMeal}
+                ]
+            })
+
+            handleBanner({state:true,message:"added to cart",bgColor:"green"})
+            setTimeout(()=>handleBanner({state:false,message:"",bgColor:""}),2000)              
+
+        }else{
+
+            const findInCart = myCart.find((each)=>{
+                return each._id === _id
+            })
+
+            if(!findInCart){
+
+                setMyCart((oldValue)=>{
+                    return [
+                        ...oldValue,
+                        {...findInMeals}
+                    ]
+                })
+                handleBanner({state:true,message:"added to cart",bgColor:"green"})
+                setTimeout(()=>handleBanner({state:false,message:"",bgColor:""}),2000)                   
+        
+            }else{
+                handleBanner({state:true,message:"already exist in cart",bgColor:'red'})
+                setTimeout(()=>handleBanner({state:false,message:"",bgColor:""}),2000)                
+            }
+        }
+
+    }    
+
+
+    
+    const addToFavs = (_id)=>{
+
+        if(myFavs.length < 1){
+            setMyFavs((oldValue)=>{
+                return [
+                    ...oldValue,
+                    {...singleMeal}
+                ]
+            })
+            handleBanner({state:true,message:'added to favorites',bgColor:'green'})
+            setTimeout(()=>handleBanner({state:false,message:"",bgColor:""}),2000)        
+        }else{
+
+            const findInFavs = myFavs.find((each)=>{
+                return each._id === _id
+            })
+        
+            if(!findInFavs){
+                setMyFavs((oldValue)=>{
+                    return [...oldValue,{...singleMeal}]
+                })
+                handleBanner({state:true,message:'added to favorites',bgColor:'green'})
+                setTimeout(()=>handleBanner({state:false,message:"",bgColor:""}),2000)    
+            }else{
+                handleBanner({state:true,message:"already exist in favorites",bgColor:'red'})
+                setTimeout(()=>handleBanner({state:false,message:"",bgColor:""}),2000)         
+            }
+
+        }
+
+    }
+
+    useEffect(()=>{
+        localStorage.setItem("my-cart-food",JSON.stringify(myCart))
+    },[myCart])
+
+    useEffect(()=>{
+        localStorage.setItem("my-favorite-food",JSON.stringify(myFavs))
+    },[myFavs])
+
+
     const query = searcher.get("query")
-    console.log(query)
     
     const normalLink = 'w-[30%] block py-2 text-center rounded-t-md font-extrabold'
     const hoverAndNormal = 'hover:text-orange-500 hover:bg-gray-300 '+normalLink
@@ -66,11 +171,16 @@ function SearchSingle(){
                     <div className={'absolute top-0 right-2'}>
                         <ParamButton
                         btnInnerText={heartIcon}
-                        btnStyle={'text-2xl mr-[1rem] md:mr-[1.5rem] md:text-3xl cursor-pointer'}/>
+                        btnStyle={'text-2xl mr-[1rem] md:mr-[1.5rem] md:text-3xl cursor-pointer'}
+                        meal_id={singleMeal._id}
+                        handleClick={addToFavs}
+                        />
 
                         <ParamButton
                         btnInnerText={cartIcon}
-                        btnStyle={'text-2xl md:text-3xl cursor-pointer'}/>
+                        btnStyle={'text-2xl md:text-3xl cursor-pointer'}
+                        meal_id={singleMeal._id}
+                        handleClick={addToCart}/>
                     </div>
                 </div>
                 <div className={'text-white flex justify-between mt-2'}>
@@ -85,6 +195,7 @@ function SearchSingle(){
                     <Outlet context={[productData,setProductData,singleMeal,similarMeals]}/>
                 </div>
             </div>            
+            <Banner bannerState={bannerState.state} bannerBgColor={bannerState.bgColor} bannerMessage={bannerState.message}/>
             
         </div>
     )

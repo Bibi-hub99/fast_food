@@ -9,9 +9,13 @@ import { FaThumbsDown } from "react-icons/fa6";
 import { CgMenuGridO } from "react-icons/cg";
 import { MdClear } from "react-icons/md";
 import { FaPenAlt } from "react-icons/fa";
+import { ImBin } from "react-icons/im";
+import { IoMdAdd } from "react-icons/io";
+import { HiOutlineMinus } from "react-icons/hi2";
 
 
 const MyContext = createContext()
+
 
 const contextValue = {
     navbarLinks:[
@@ -103,7 +107,14 @@ const contextValue = {
     dislikeIcon:<FaThumbsDown className={'inline'}/>,
     sortIcon:<CgMenuGridO className={"inline"}/>,
     clearIcon:<MdClear/>,
-    penIcon:<FaPenAlt/>
+    penIcon:<FaPenAlt/>,
+    binIcon:<ImBin className={'inline'}/>,
+    plusIcon:<IoMdAdd className={"inline"}/>,
+    minusIcon:<HiOutlineMinus className={'inline'}/>,
+    saveCart:function(keyName,value){
+        const convertJSON = JSON.stringify(value)
+        localStorage.setItem(keyName,convertJSON)
+    }
 }
 
 export const useMyContext = ()=>{

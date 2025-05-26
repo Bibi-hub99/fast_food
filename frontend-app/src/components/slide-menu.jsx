@@ -14,11 +14,16 @@ function SlideMenu(props){
         backgroundColor:"rgba(0,0,0,0.8)",
         height:'100vh',
         width:props.width,
-        top:'0'
+        top:'0',
+        zIndex:'30'
     }
 
     const navbarLinkMap = navbarLinks.map((each)=>{
-        return <NavLink to={each.url} key={`slideLinks${each.id}`} className={({isActive}) => isActive ? activeLink:mobileLink}>{each.title}</NavLink>
+        return <NavLink 
+        to={each.url} 
+        key={`slideLinks${each.id}`} 
+        className={({isActive}) => isActive ? activeLink:mobileLink}
+        onClick={props.hideSlideMenu}>{each.title}</NavLink>
     })
 
     return (
@@ -28,8 +33,11 @@ function SlideMenu(props){
                 btnInnerText={clearIcon}
                 btnStyle={'absolute right-1 hover:bg-gray-400 rounded-md top-1 py-2 px-2 cursor-pointer'}
                 handleClick={props.hideSlideMenu}/>
+                
                 <div>
-                    <NavLink to={'.'} className={({isActive}) => isActive ? activeLink:linkStyle}>Home</NavLink>
+                    <NavLink to={'.'} 
+                    className={({isActive}) => isActive ? activeLink:linkStyle}
+                    onClick={props.hideSlideMenu}>Home</NavLink>
                     {navbarLinkMap}
                 </div>
             </div>

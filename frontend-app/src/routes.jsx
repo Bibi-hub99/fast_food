@@ -10,6 +10,7 @@ import Admin from "./pages/admin"
 import AdminHome from "./pages/admin-home"
 import AddProductPage from "./pages/admin-addProduct"
 
+
 import {getAllProducts} from "./http"
 
 const LazyAboutProduct = lazy(()=>import("./pages/productAbout"))
@@ -23,6 +24,8 @@ const LazySearchSingle = lazy(()=>import("./pages/search-single"))
 const LazySingleAbout = lazy(()=>import("./pages/search-singleAbout"))
 const LazySingleInformation = lazy(()=>import("./pages/search-singleInformation"))
 const LazySingleSimilar = lazy(()=>import("./pages/search-singleSimilar"))
+const LazyFavorites = lazy(()=>import("./pages/favorites"))
+const LazyCart = lazy(()=>import("./pages/cart"))
 
 const routes = createBrowserRouter([
 
@@ -58,6 +61,28 @@ const routes = createBrowserRouter([
                     }
                 ]
             },
+            {
+                path:'favorites',
+                loader:()=>{
+                    return JSON.parse(localStorage.getItem("my-favorite-food"))
+                },
+                element:(
+                    <Suspense fallback={<Spinner/>}>
+                        <LazyFavorites/>
+                    </Suspense>
+                )
+            },
+            {
+                path:"cart",
+                loader:()=>{
+                    return JSON.parse(localStorage.getItem("my-cart-food"))
+                },
+                element:(
+                    <Suspense>
+                        <LazyCart/>
+                    </Suspense>
+                )
+            }
 
    
         ]

@@ -24,6 +24,11 @@ const productSchema = new mongoose.Schema({
         minLength:1,
         maxLength:100,
     },
+    category:{
+        type:String,
+        required:true,
+        minLength:1,
+    },
     tags:[String],
     locations:[
         {
@@ -109,8 +114,6 @@ limit}){
             }
         }
 
-        console.log(typeof(minPriceStart))
-
         if(minPriceStart !== "undefined" && minPriceStart !== undefined){
             filters.push({price:{$gte:Number(minPriceStart),$lte:Number(minPriceEnd)}})
         }
@@ -133,7 +136,6 @@ limit}){
             queryBuilder = queryBuilder.limit(Number(limit))
         }
 
-        console.log(filters)
 
         return await queryBuilder
 
@@ -163,6 +165,28 @@ productSchema.statics.productUpdate = async function productUpdate({_id,name,ima
         console.log(err)
     }
 
+}
+
+productSchema.statics.productAdd = async function productAdd({name,imageURL,price,description,category,tags,locations}){
+    try{
+
+        const newProduct = new this({
+            name,
+            imageURL,
+            price,
+            description,
+            category,
+            tags,
+            locations
+        })
+        
+        await newProduct.save()
+        const response = true
+        return response
+
+    }catch(err){
+        console.log(err)
+    }
 }
 
 const ProductModel = mongoose.model('products',productSchema,'products')

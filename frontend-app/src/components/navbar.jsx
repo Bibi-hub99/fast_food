@@ -18,7 +18,7 @@ function Navbar(props){
 
 
     return (
-        <div className={'bg-black shadow-md text-white py-4 font-bold fixed w-full top-0'}>
+        <div className={'bg-black shadow-md text-white py-4 font-bold fixed w-full top-0'} style={{zIndex:'20'}}>
             <div className={'flex w-[97%] m-auto items-center'}>
                 <div className={'md:w-[20%]'}>
                     <h1>Food App</h1>

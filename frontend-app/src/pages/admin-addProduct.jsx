@@ -131,6 +131,15 @@ function AddProductPage(){
         try{
             const response = await addProduct(productInfo)
             console.log(response)
+            setProductInfo({
+                name:"",
+                imageURL:"",
+                price:"",
+                description:"",
+                category:"",
+                tags:[],
+                locations:[]
+            })
         }catch(err){
             console.log(err)
         }
@@ -158,6 +167,7 @@ function AddProductPage(){
             locationTags={locationMaps}
             addTag={addTag}
             addLocation={addLocation}
+            productUpdate={productAdd}
             />
 
         </div>

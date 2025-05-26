@@ -65,4 +65,29 @@ const updateProduct = async(req,res)=>{
 
 }
 
-module.exports = {findAllProducts,findSingleProduct,getByCategory,querySearch,updateProduct}
+const addProduct = async(req,res)=>{
+
+    try{
+
+        const {name,imageURL,price,description,category,tags,locations} = req.body
+
+        const productObj = {
+            name:name,
+            imageURL:imageURL,
+            price:price,
+            description:description,
+            category:category,
+            tags:tags,
+            locations:locations
+        }
+
+        const response = await ProductModel.productAdd(productObj)
+        res.status(200).json({success:response})
+
+    }catch(err){
+        console.log(err)
+    }
+
+}
+
+module.exports = {findAllProducts,findSingleProduct,getByCategory,querySearch,updateProduct,addProduct}
