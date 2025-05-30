@@ -33,6 +33,7 @@ function CartCard(props){
                         btnStyle={'absolute right-2 top-[.1rem] cursor-pointer'}
                         handleClick={props.increment}
                         meal_id={props.meal_id}/>
+
                     </div>
                     <div className={'w-[50%]'}>
                         <ParamButton
@@ -42,8 +43,9 @@ function CartCard(props){
                         meal_id={props.meal_id}/>
                     </div>
                 </div>
-            </div>            
+                <p>Remaining : {props.available}</p>
 
+            </div>            
         </div>
     )
 

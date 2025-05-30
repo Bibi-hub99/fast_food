@@ -23,3 +23,40 @@
 body{
   background-color:rgb(22, 20, 20);
 }
+
+.payment-container{
+  position:fixed;
+  top:0;
+  inset:0;
+  z-index:40;
+  background-color:white;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+.payment-content{
+  margin-top:-10rem;
+}
+
+.payment-loader{
+  height:2rem;
+  width:2rem;
+  background-color:black;
+}
+
+.order-table{
+  text-align:start;
+}
+
+.order-table,.order-table th{
+  border:1px solid black;
+  text-align:left;
+  border-collapse:collapse;
+  border-radius:100px;
+}
+
+.order-table{
+  width:100%;
+}

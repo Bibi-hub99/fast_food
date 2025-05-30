@@ -1,5 +1,4 @@
-const mongoose = require("mongoose")
-
+const mongoose = require('../mongoose');
 
 async function ConnectDB (){
   try{
@@ -15,7 +14,6 @@ async function ConnectDB (){
   }
 
 }
-
 
 
 module.exports = ConnectDB

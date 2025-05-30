@@ -4,6 +4,7 @@ require("dotenv").config()
 const connectDB = require("./connectDB/connect")
 const ProductRouter  = require("./routes/products")
 const ProductDataRouter = require("./routes/product-data")
+const OrderRouter = require("./routes/customer")
 
 connectDB()
 
@@ -15,6 +16,7 @@ const PORT = process.env.PORT || 8888
 
 app.use("/products",ProductRouter)
 app.use("/product-data",ProductDataRouter)
+app.use('/customer',OrderRouter)
 
 app.listen(PORT,()=>{
     console.log('started listening on port 8888')

@@ -34,7 +34,14 @@ const productSchema = new mongoose.Schema({
         {
             town:String,
         }
-    ]
+    ],
+    available:{
+        type:Number,
+        min:1,
+        max:100,
+        required:true,
+        default:20
+    }
 })
 
 productSchema.statics.findAllProducts = async function findAllProducts(){
@@ -184,6 +191,43 @@ productSchema.statics.productAdd = async function productAdd({name,imageURL,pric
         const response = true
         return response
 
+    }catch(err){
+        console.log(err)
+    }
+}
+
+productSchema.statics.purchase = async function purchase({productID,quantity}){
+    try{
+        return await this.updateMany({
+            $and:[{
+                _id:{
+                    $eq:productID
+                }
+            },{
+                available:{
+                    $not:{
+                        $lt:quantity
+                    }
+                }
+            }]
+        },{$inc:{available:-Number(quantity)}})
+    }catch(err){
+        console.log(err)
+    }
+}
+
+productSchema.statics.validatePurchase = async function validatePurchase(items){
+    try{
+        return await this.bulkWrite(items)
+    }catch(err){
+        console.log(err)
+    }
+}
+
+productSchema.statics.purchaseResults = async function(productID){
+    try{
+        const response = await this.findById(productID,{available:1})
+        return response
     }catch(err){
         console.log(err)
     }

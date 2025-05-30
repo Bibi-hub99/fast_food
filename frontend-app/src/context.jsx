@@ -12,6 +12,9 @@ import { FaPenAlt } from "react-icons/fa";
 import { ImBin } from "react-icons/im";
 import { IoMdAdd } from "react-icons/io";
 import { HiOutlineMinus } from "react-icons/hi2";
+import { TiTick } from "react-icons/ti";
+import { MdError } from "react-icons/md";
+import { FaCcMastercard } from "react-icons/fa";
 
 
 const MyContext = createContext()
@@ -99,6 +102,32 @@ const contextValue = {
             isChecked:false
         }
     ],
+    sorters:[
+        {
+            id:1,
+            title:'name',
+            name:'sorter',
+            isChecked:false
+        },
+        {
+            id:2,
+            title:'price',
+            name:'sorter',
+            isChecked:false
+        },
+        {
+            id:3,
+            title:'relevance',
+            name:'sorter',
+            isChecked:false
+        },
+        {
+            id:4,
+            title:'availability',
+            name:'sorter',
+            isChecked:false
+        }
+    ],
     searchIcon:<CiSearch className={'inline'}/>,
     barsIcon:<HiMiniBars3 className={'inline'}/>,
     heartIcon:<FaHeart className={'inline'}/>,
@@ -111,6 +140,9 @@ const contextValue = {
     binIcon:<ImBin className={'inline'}/>,
     plusIcon:<IoMdAdd className={"inline"}/>,
     minusIcon:<HiOutlineMinus className={'inline'}/>,
+    tickIcon:<TiTick className={'text-green-600 inline'}/>,
+    errorIcon:<MdError className={'text-red-600 inline'}/>,
+    masterCard:<FaCcMastercard className={'inline'}/>,
     saveCart:function(keyName,value){
         const convertJSON = JSON.stringify(value)
         localStorage.setItem(keyName,convertJSON)

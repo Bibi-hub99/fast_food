@@ -12,7 +12,7 @@ function Admin(){
                     <ul className={"flex"}>
                         <li className={""}><NavLink to={'.'} end className={({isActive})=>isActive ? activeLink:inActiveLink}>Home</NavLink></li>
                         <li className={"ml-2"}><NavLink to={"add-product"} className={({isActive})=>isActive ? activeLink:inActiveLink}>Add Product</NavLink></li>
-                        <li className={"ml-2"}><NavLink to={""} className={({isActive}) =>isActive ? activeLink:inActiveLink}></NavLink></li>
+                        <li className={"ml-2"}><NavLink to={"orders"} className={({isActive}) =>isActive ? activeLink:inActiveLink}>Orders</NavLink></li>
                     </ul>
                 </div>
             </div>

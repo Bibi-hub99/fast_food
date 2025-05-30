@@ -1,7 +1,9 @@
 import axios from "axios"
 import {defer} from "react-router-dom"
 
-const baseURL = import.meta.env.VITE_BASE_URI
+const baseURL = import.meta.env.VITE_BASE_URL
+
+
 
 export const getAllProducts = ()=>{
     const request = axios.get(`${baseURL}/products`)
@@ -119,4 +121,30 @@ export const addProduct = async({name,imageURL,price,description,category,tags,l
         console.log(err)
     }
 
+}
+
+export const makePurchase = async({buyerName,buyerTelephone,deliveryAddress,items})=>{
+
+        const request = axios.post(`${baseURL}/customer/purchase`,{
+            buyerName,
+            buyerTelephone,
+            deliveryAddress,
+            items
+        })
+        return request
+
+}
+
+export const getAllOrders = ()=>{
+    const response = axios.get(`${baseURL}/customer/orders`)
+    return defer({response:response})
+}
+
+export const deleteOrder = async(orderID)=>{
+    try{
+        const {data} = await axios.delete(`${baseURL}/customer/orders/${orderID}`)
+        return data
+    }catch(err){
+        console.log(err)
+    }
 }

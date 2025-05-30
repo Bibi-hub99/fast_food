@@ -9,9 +9,9 @@ import Spinner from "./components/suspense-fallback"
 import Admin from "./pages/admin"
 import AdminHome from "./pages/admin-home"
 import AddProductPage from "./pages/admin-addProduct"
+import Orders from './pages/orders'
 
-
-import {getAllProducts} from "./http"
+import {getAllProducts,getAllOrders} from "./http"
 
 const LazyAboutProduct = lazy(()=>import("./pages/productAbout"))
 const LazyProductInfo = lazy(()=>import("./pages/productInformation"))
@@ -26,6 +26,8 @@ const LazySingleInformation = lazy(()=>import("./pages/search-singleInformation"
 const LazySingleSimilar = lazy(()=>import("./pages/search-singleSimilar"))
 const LazyFavorites = lazy(()=>import("./pages/favorites"))
 const LazyCart = lazy(()=>import("./pages/cart"))
+const LazyCheckout = lazy(()=>import("./pages/checkout"))
+const LazyOrders = lazy(()=>import("./pages/orders"))
 
 const routes = createBrowserRouter([
 
@@ -82,8 +84,15 @@ const routes = createBrowserRouter([
                         <LazyCart/>
                     </Suspense>
                 )
+            },
+            {
+                path:"cart/checkout",
+                element:(
+                    <Suspense fallback={<Spinner/>}>
+                        <LazyCheckout/>
+                    </Suspense>
+                )
             }
-
    
         ]
     },
@@ -202,6 +211,15 @@ const routes = createBrowserRouter([
             {
                 path:"add-product",
                 element:<AddProductPage/>
+            },
+            {
+                path:'orders',
+                loader:getAllOrders,
+                element:(
+                    <Suspense fallback={<Spinner/>}>
+                        <LazyOrders/>
+                    </Suspense>
+                )
             }
         ]
     }

@@ -18,6 +18,8 @@ function AllMenuProducts(){
         bgColor:'red'
     })    
 
+    console.log(menuItems)
+
     const handleBanner = ({state,message,bgColor})=>{
         setBannerState((oldValue)=>{
             return {
@@ -134,7 +136,7 @@ function AllMenuProducts(){
                             <div>
                                 <div className={'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3'}>
                                     {
-                                        menuItems.map((each)=>{
+                                        menuItems.length > 0 ? menuItems.map((each)=>{
                                             return (
                                                 <ProductCard
                                                 key={`menuItems${each._id}`} 
@@ -147,7 +149,7 @@ function AllMenuProducts(){
                                                 addToFavs={addToFavs}
                                                 />
                                             )
-                                        })
+                                        }):<h2 className={"text-red-600"}>No Meals matched the request</h2>
                                     }
                                 </div>
                             </div>

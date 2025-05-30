@@ -25,6 +25,9 @@ function MobileFilter(props){
                         props.filterMaps
                     }
                 </ul>
+                <ul className={'mt-5'}>
+                    {props.sorterMaps}
+                </ul>
             </div>
         </div>
     )

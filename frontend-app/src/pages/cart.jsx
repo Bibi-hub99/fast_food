@@ -1,7 +1,6 @@
 import CartCard from "../components/cart"
-import {useLoaderData} from "react-router-dom"
+import {useLoaderData,useNavigate,Navigate} from "react-router-dom"
 import {useState,useEffect} from "react"
-import {useNavigate} from "react-router-dom"
 import Button from "../components/button"
 import numeral from "numeral"
 
@@ -35,6 +34,8 @@ function Cart(){
         })
     },[])
 
+    console.log(myCart)
+
     useEffect(()=>{
         localStorage.setItem("my-cart-food",JSON.stringify(myCart))
     },[myCart])
@@ -55,6 +56,7 @@ function Cart(){
 
         setMyCart((oldValue)=>{
             return oldValue.map((each)=>{
+
                 return each._id === _id ? 
                 {
                     ...each,
@@ -69,6 +71,12 @@ function Cart(){
     const totalPrice = numeral(myCart.reduce((prevValue,currentValue)=>{
         return prevValue + (currentValue.price * currentValue.quantity)
     },0)).format("0,0.00")
+
+    const navigate = useNavigate()
+
+    const handleCheckout = ()=>{
+        navigate("checkout")
+    }
 
 
     return (
@@ -88,6 +96,7 @@ function Cart(){
                                 increment={incrementQuantity}
                                 decrement={decrementQuantity}
                                 removeItem={removeItem}
+                                available={each.available}
                                 />
                             )
                         }):<p>The cart is empty</p>
@@ -97,7 +106,8 @@ function Cart(){
                     <p>Total : R {totalPrice}</p>
                     <Button
                     btnInnerText={'Checkout'}
-                    btnStyle={'bg-black py-2 px-5 rounded-[2rem] absolute top-[20%] right-2 cursor-pointer'}/>
+                    btnStyle={'bg-black py-2 px-5 rounded-[2rem] absolute top-[20%] right-2 cursor-pointer'}
+                    handleClick={handleCheckout}/>
                 </div>}
             </div>
             <p></p>

@@ -13,7 +13,7 @@ import Banner from "../components/banner"
 
 function SearchResults(){
 
-    const {filters} = useMyContext()
+    const {filters,sorters} = useMyContext()
 
     const [searcher,setSearcher] = useSearchParams()
     const [searchInput,setSearchInput] = useState("")
@@ -21,8 +21,10 @@ function SearchResults(){
     const [isLoading,setIsLoading] = useState(false)
     const [openFilter,setOpenFilter] = useState(false)
     const [filterState,setFilterStates] = useState(JSON.parse(sessionStorage.getItem("filter-ranges"))|| filters)
+    const [sorterState,setSorterState] = useState(JSON.parse(sessionStorage.getItem("sorters")) ||sorters)
     const [myFavs,setMyFavs] = useState(JSON.parse(localStorage.getItem("my-favorite-food")) || [])
     const [myCart,setMyCart] = useState(JSON.parse(localStorage.getItem("my-cart-food")) || [])
+    const [sorterCond,setSorterCond] = useState("")
 
     const [bannerState,setBannerState] = useState({
         state:false,
@@ -214,7 +216,11 @@ function SearchResults(){
             })
         })
 
+    }
 
+    const sorterMethod = ()=>{
+        const sortByPrice = [...meals].sort((a,b)=>b.price-a.price)
+        setMeals(sortByPrice)
     }
 
     const applyFilters = async()=>{
@@ -229,7 +235,7 @@ function SearchResults(){
             midPriceEnd:searcher.get("midPriceEnd") || "undefined",
             highPriceStart:searcher.get("highPriceStart") || "undefined",
             highPriceEnd:searcher.get("highPriceEnd") || "undefined",
-            limit:1
+            limit:10
         })
         setIsLoading(false)
         setMeals(response)
@@ -242,6 +248,15 @@ function SearchResults(){
             <li key={`mobiFilters${each.id}`}>
                 <input type={"checkbox"} name={each.title} id={`check${each.id}`} checked={each.isChecked ? true:false} onChange={()=>changePriceRange(each.id)}></input>
                 <label htmlFor={`check${each.id}`}> {each.text}</label>
+            </li>
+        )
+    })
+
+    const sorterMaps = sorterState.map((each)=>{
+        return (
+            <li key={`sorters${each.id}`}>
+                <input type={'radio'} name={each.name} id={`radio${each.id}`} value={each.title} onClick={sorterMethod}></input>
+                <label htmlFor={`radio${each.id}`} className={`capitalize`}> {`sort by ${each.title}`}</label>
             </li>
         )
     })
@@ -276,6 +291,10 @@ function SearchResults(){
                     <ul>
                         {filterMaps}
                     </ul>
+                    <ul className={'mt-3'}>
+                        {sorterMaps}
+                        <button className={'border-1 px-3 py-2'} onClick={sorterMethod}>Sort</button>
+                    </ul>
                 </div>
 
                 <div className={"md:w-[75%] md:ml-[24%] lg:w-[80%] lg:ml-[19%] xl:w-[84%] xl:ml-[16%] rounded-md py-1 px-1 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"}>
@@ -305,7 +324,7 @@ function SearchResults(){
                 </div>
 
             </div>
-            {openFilter && <MobileFilter state={false} toggleOpenFilter={toggleOpenFilter} filterMaps={filterMaps} applyFilters={applyFilters}/>}
+            {openFilter && <MobileFilter state={false} toggleOpenFilter={toggleOpenFilter} filterMaps={sorterMaps} sorterMaps={sorterMaps} applyFilters={applyFilters}/>}
             <div>
 
             </div>
