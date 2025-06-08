@@ -1,4 +1,5 @@
 const mongoose = require("../mongoose")
+const ProductData = require("./product-data")
 
 const productSchema = new mongoose.Schema({
     name:{
@@ -6,6 +7,7 @@ const productSchema = new mongoose.Schema({
         minLength:3,
         required:true,
         unique:true,
+        text:true
     },
     imageURL:{
         type:String,
@@ -23,6 +25,7 @@ const productSchema = new mongoose.Schema({
         required:true,
         minLength:1,
         maxLength:100,
+        text:true
     },
     category:{
         type:String,
@@ -43,6 +46,7 @@ const productSchema = new mongoose.Schema({
         default:20
     }
 })
+
 
 productSchema.statics.findAllProducts = async function findAllProducts(){
     try{
@@ -187,7 +191,11 @@ productSchema.statics.productAdd = async function productAdd({name,imageURL,pric
             locations
         })
         
-        await newProduct.save()
+        const newProductSave = await newProduct.save()
+        const newProductData = await ProductData.newProductData(newProductSave._id)
+        console.log(newProductSave)
+        console.log(newProductData)
+
         const response = true
         return response
 
@@ -234,5 +242,4 @@ productSchema.statics.purchaseResults = async function(productID){
 }
 
 const ProductModel = mongoose.model('products',productSchema,'products')
-
 module.exports = ProductModel

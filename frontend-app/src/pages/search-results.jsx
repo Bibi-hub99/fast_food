@@ -139,7 +139,9 @@ function SearchResults(){
             const response = await querySearch({
                 searchTerm:query
             })
-            setMeals(response)
+            if(typeof(response) !=="undefined"){
+                setMeals(response)
+            }
             setIsLoading(false)
         }
         queryMeals()
@@ -172,14 +174,57 @@ function SearchResults(){
                     searcher.set("highPriceStart",priceRangeStart)
                     searcher.set("highPriceEnd",priceRangeEnd)
                 }
+            }else{
+                if(title === "min"){
+                    searcher.delete("minPriceStart")
+                    searcher.delete("minPriceEnd")
+                }
+                if(title === "mid"){
+                    searcher.delete("midPriceStart")
+                    searcher.delete("midPriceEnd")
+                }
+                if(title === "high"){
+                    searcher.delete("highPriceStart")
+                    searcher.delete("highPriceEnd")
+                }
             }
-
-
 
         })
 
     },[filterState])
 
+    console.log(filterState)
+
+    useEffect(()=>{
+        const sorterFn = (condition)=>{
+
+            if(condition === "name"){
+                const sortMeals = [...meals].sort((a,b)=>{
+
+                    let x = a.name.toLowerCase()
+                    let y = b.name.toLowerCase()
+
+                    if(x > y){
+                        return 1
+                    }
+                    if(x < y){
+                        return -1
+                    }
+
+                    return 0
+
+                })
+                setMeals(sortMeals)
+            }else if(condition === "price"){
+                const sortMeals = [...meals].sort((a,b)=>a.price - b.price)
+                setMeals(sortMeals)
+            }
+
+        }
+        if(sorterCond.trim()!==""){
+            sorterFn(sorterCond)
+        }
+    },[sorterCond])
 
     const navigate = useNavigate()
 
@@ -218,9 +263,9 @@ function SearchResults(){
 
     }
 
-    const sorterMethod = ()=>{
-        const sortByPrice = [...meals].sort((a,b)=>b.price-a.price)
-        setMeals(sortByPrice)
+    const sorterMethod = (evt)=>{
+        const {value} = evt.target
+        setSorterCond(value)
     }
 
     const applyFilters = async()=>{
@@ -238,7 +283,9 @@ function SearchResults(){
             limit:10
         })
         setIsLoading(false)
-        setMeals(response)
+        if(typeof(response) !== "undefined"){
+            setMeals(response)
+        }
 
     }
 
@@ -255,7 +302,7 @@ function SearchResults(){
     const sorterMaps = sorterState.map((each)=>{
         return (
             <li key={`sorters${each.id}`}>
-                <input type={'radio'} name={each.name} id={`radio${each.id}`} value={each.title} onClick={sorterMethod}></input>
+                <input type={'radio'} name={each.name} id={`radio${each.id}`} value={each.title} onChange={sorterMethod}></input>
                 <label htmlFor={`radio${each.id}`} className={`capitalize`}> {`sort by ${each.title}`}</label>
             </li>
         )
@@ -266,6 +313,7 @@ function SearchResults(){
         return <Spinner/>
     }
 
+    console.log(meals)
 
     return (
         <div>
@@ -293,11 +341,10 @@ function SearchResults(){
                     </ul>
                     <ul className={'mt-3'}>
                         {sorterMaps}
-                        <button className={'border-1 px-3 py-2'} onClick={sorterMethod}>Sort</button>
                     </ul>
                 </div>
 
-                <div className={"md:w-[75%] md:ml-[24%] lg:w-[80%] lg:ml-[19%] xl:w-[84%] xl:ml-[16%] rounded-md py-1 px-1 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"}>
+                <div className={"w-[100%] md:w-[75%] md:ml-[24%] lg:w-[80%] lg:ml-[19%] xl:w-[84%] xl:ml-[16%] rounded-md py-1 px-1 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"}>
                     {
                         meals.length > 0 ? meals.map((each)=>{
                             return (
@@ -324,7 +371,7 @@ function SearchResults(){
                 </div>
 
             </div>
-            {openFilter && <MobileFilter state={false} toggleOpenFilter={toggleOpenFilter} filterMaps={sorterMaps} sorterMaps={sorterMaps} applyFilters={applyFilters}/>}
+            {openFilter && <MobileFilter state={false} toggleOpenFilter={toggleOpenFilter} filterMaps={filterMaps} sorterMaps={sorterMaps} applyFilters={applyFilters}/>}
             <div>
 
             </div>

@@ -6,7 +6,7 @@ function MobileFilter(props){
     const {filters,clearIcon} = useMyContext()
 
     return (
-        <div className={"bg-white fixed top-[4rem] right-2 w-[50%] px-2 box-border rounded-md"}>
+        <div className={"bg-white fixed top-[4rem] right-2 w-[50%] px-2 box-border rounded-md md:hidden"}>
             <Button 
             btnStyle={"absolute right-1 top-2 text-[1.2rem] cursor-pointer"}
             btnInnerText={clearIcon}

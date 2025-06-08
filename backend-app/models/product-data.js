@@ -33,6 +33,17 @@ const productSchema = new mongoose.Schema({
 
 })
 
+productSchema.statics.newProductData = async function newProductData(productID){
+    try{
+        const newProductData = new this({
+            productID:productID
+        })
+        await newProductData.save()
+    }catch(err){
+        console.log(err)
+    }
+}
+
 productSchema.statics.getProductData = async function getProductData(productID){
     try{
         const response = await this.findOne({

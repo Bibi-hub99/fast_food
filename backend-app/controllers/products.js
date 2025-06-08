@@ -28,6 +28,7 @@ const getByCategory = async (req,res)=>{
 
 const querySearch = async(req,res)=>{
     const {searchTerm,minPriceStart,minPriceEnd,midPriceStart,midPriceEnd,highPriceStart,highPriceEnd,limit} = req.query
+
     try{
         const response = await ProductModel.querySearch({
             searchTerm,
@@ -92,10 +93,6 @@ const addProduct = async(req,res)=>{
 
 const purchase = async(req,res)=>{
     const {buyerName,buyerTelephone,deliveryAddress,items} = req.body
-    console.log(buyerName)
-    console.log(buyerTelephone)
-    console.log(deliveryAddress)
-    console.log(items)
     res.status(200).json({success:true})
 
 }
