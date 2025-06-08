@@ -6,6 +6,7 @@ const productSchema = new mongoose.Schema({
         minLength:3,
         required:true,
         unique:true,
+        text:true
     },
     imageURL:{
         type:String,
@@ -23,6 +24,7 @@ const productSchema = new mongoose.Schema({
         required:true,
         minLength:1,
         maxLength:100,
+        text:true
     },
     category:{
         type:String,
@@ -43,6 +45,8 @@ const productSchema = new mongoose.Schema({
         default:20
     }
 })
+
+productSchema.index({name:"text",description:"text"},{weights:{name:10,description:7}})
 
 productSchema.statics.findAllProducts = async function findAllProducts(){
     try{
